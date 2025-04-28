@@ -4,44 +4,30 @@
     <meta charset="UTF-8">
     <title>Recommendations</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .anime-card {
-            margin-bottom: 20px;
-        }
-        .anime-card img {
-            max-height: 200px;
-            object-fit: cover;
-        }
-    </style>
 </head>
 <body>
-<div class="container">
-    <h2 class="mt-5">Your Recommendations</h2>
-
-    {% if recommendations %}
-        <div class="row mt-4">
-            {% for anime in recommendations %}
-                <div class="col-md-4 anime-card">
-                    <div class="card h-100">
-                        <img src="{{ anime.image_url }}" class="card-img-top" alt="{{ anime.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ anime.name }}</h5>
-                            <p><strong>Genre:</strong> {{ anime.genre }}</p>
-                            <p><strong>Score:</strong> {{ anime.score }}</p>
-                            <p class="card-text"><small>{{ anime.synopsis[:200] }}...</small></p>
-                        </div>
-                    </div>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Anime Recommendations</h2>
+    <div class="row">
+        {% for anime in recommendations %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ anime.image_url }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ anime.name }}</h5>
+                    <p class="card-text"><strong>Genre:</strong> {{ anime.genre }}</p>
+                    <p class="card-text"><strong>Score:</strong> {{ anime.score }}</p>
+                    <p class="card-text">{{ anime.synopsis[:100] }}...</p>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    {% else %}
-        <p class="mt-4">No recommendations found for the selected genre.</p>
-    {% endif %}
-
-    <a href="{{ url_for('index') }}" class="btn btn-primary mt-4">Back to Genre Selection</a>
-    <a href="{{ url_for('logout') }}" class="btn btn-danger mt-4 ms-2">Logout</a>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Back</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
