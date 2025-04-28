@@ -46,10 +46,10 @@ def register():
             flash('Please fill out both fields.', 'warning')
             return redirect(url_for('register'))
 
-        # Check if user already exists
+        # Check if the username already exists
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            flash('Username already taken.', 'danger')
+            flash('Username already exists. Please choose another.', 'danger')
             return redirect(url_for('register'))
 
         hashed_password = generate_password_hash(password, method='sha256')
@@ -58,11 +58,11 @@ def register():
         try:
             db.session.add(new_user)
             db.session.commit()
-            flash('Registration successful! Please log in.', 'success')
+            flash('Registration successful! You can now log in.', 'success')
             return redirect(url_for('login'))
         except Exception as e:
             db.session.rollback()
-            flash(f'Registration failed: {str(e)}', 'danger')
+            flash(f'Registration error: {str(e)}', 'danger')
             return redirect(url_for('register'))
 
     return render_template('register.html')
