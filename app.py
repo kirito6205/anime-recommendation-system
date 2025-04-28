@@ -5,43 +5,38 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from recommendation import get_recommendations
 import os
 
+# Initialize app and config
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
-
-# Database config
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
-# Login manager setup
-login_manager = LoginManager()
-login_manager.init_app(app)
+# Initialize database and login manager
+db = SQLAlchemy(app)
+login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-
-# User model
+# Define the User model
 class User(UserMixin, db.Model):
-    __tablename__ = 'user'  # Optional but clear
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
 
-
+# Load user by ID for Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
-# Automatically create tables before the first request
+# ✅ Correctly placed table creation
 @app.before_first_request
 def create_tables():
     db.create_all()
 
-
+# Routes
 @app.route('/')
 def home():
     return redirect(url_for('login'))
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -73,7 +68,6 @@ def register():
 
     return render_template('register.html')
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -89,7 +83,6 @@ def login():
 
     return render_template('login.html')
 
-
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
@@ -99,14 +92,13 @@ def index():
         return render_template('recommendations.html', recommendations=recommendations)
     return render_template('index.html')
 
-
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
+# Entry point
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
