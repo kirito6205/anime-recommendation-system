@@ -1,22 +1,37 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Choose Genre</title>
+    <title>Home - Get Recommendations</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <h2 class="mt-5">Welcome {{ current_user.username }}</h2>
+    <h2 class="mt-5">Get Movie Recommendations</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
     <form method="POST">
         <div class="mb-3">
-            <label>Enter Genre</label>
-            <input type="text" name="genre" class="form-control" required>
+            <label for="genre">Select Genre:</label>
+            <input type="text" class="form-control" id="genre" name="genre" placeholder="e.g., Action, Comedy" required>
         </div>
         <button type="submit" class="btn btn-success">Get Recommendations</button>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger ms-2">Logout</a>
     </form>
-    <a href="{{ url_for('logout') }}" class="btn btn-danger mt-3">Logout</a>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
