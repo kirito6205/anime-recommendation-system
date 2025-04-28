@@ -39,8 +39,9 @@ def register():
             db.session.commit()
             flash('Registration Successful. Please login.', 'success')
             return redirect(url_for('login'))
-        except:
-            flash('Username already exists.', 'danger')
+        except Exception as e:
+            db.session.rollback()  # rollback any pending database actions
+            flash(f'Registration failed: {str(e)}', 'danger')  # show real error!
             return redirect(url_for('register'))
     return render_template('register.html')
 
