@@ -30,8 +30,8 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form.get['username']
+        password = request.form.get['password']
         hashed_password = generate_password_hash(password, method='sha256')
         new_user = User(username=username, password=hashed_password)
         try:
@@ -48,8 +48,8 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form.get['username']
+        password = request.form.get['password']
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
             login_user(user)
