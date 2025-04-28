@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,24 +7,22 @@
 </head>
 <body>
 <div class="container">
-    <h2 class="mt-5">Recommended Anime</h2>
-    <div class="row">
-        {% for anime in recommendations %}
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="{{ anime.image_url }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ anime.name }}</h5>
-                    <p class="card-text"><strong>Genre:</strong> {{ anime.genre }}</p>
-                    <p class="card-text"><strong>Score:</strong> {{ anime.score }}</p>
-                    <p class="card-text">{{ anime.synopsis[:150] }}...</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    <a href="{{ url_for('index') }}" class="btn btn-primary">Back</a>
-    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    <h2 class="mt-5">Your Recommendations</h2>
+
+    {% if recommendations %}
+        <ul class="list-group mt-4">
+            {% for item in recommendations %}
+                <li class="list-group-item">{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recommendations found for the selected genre.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" class="btn btn-primary mt-4">Back to Genre Selection</a>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger mt-4 ms-2">Logout</a>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
