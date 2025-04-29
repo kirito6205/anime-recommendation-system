@@ -17,6 +17,7 @@
     </div>
   </div>
 </nav>
+
 <div class="container mt-5">
     <h2 class="text-center mb-4">Recommended Anime</h2>
     <div class="row">
@@ -25,7 +26,11 @@
             <div class="card shadow">
                 <img src="{{ anime.image_url }}" class="card-img-top" style="height:300px; object-fit:cover;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ anime.name }}</h5>
+                    <h5 class="card-title">
+                        <a href="https://myanimelist.net/anime.php?q={{ anime.name | urlencode }}" target="_blank" style="color: inherit; text-decoration: none;">
+                            {{ anime.name }}
+                        </a>
+                    </h5>
                     <p class="card-text"><strong>Genre:</strong> {{ anime.genre }}</p>
                     <p class="card-text"><strong>Score:</strong> {{ anime.score }}</p>
                     <p class="card-text">{{ anime.synopsis[:100] }}...</p>
@@ -35,6 +40,7 @@
         {% endfor %}
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
