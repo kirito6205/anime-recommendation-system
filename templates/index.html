@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Anime Recommender</a>
+    <div class="d-flex">
+      <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+  </div>
+</nav>
+<div class="container d-flex justify-content-center align-items-center" style="height:85vh;">
+    <div class="card p-4 shadow-lg" style="width: 30rem;">
+        <h3 class="text-center mb-4">Get Anime Recommendations</h3>
+        <form method="POST">
+            <div class="mb-3">
+                <input type="text" name="genre" class="form-control" placeholder="Enter Genre (e.g. Action)" required>
+            </div>
+            <div class="mb-3">
+                <input type="number" step="0.1" name="min_score" class="form-control" placeholder="Minimum Score (optional)">
+            </div>
+            <div class="mb-3">
+                <input type="text" name="type" class="form-control" placeholder="Type (TV, Movie, OVA) (optional)">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Recommend</button>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
